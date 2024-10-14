@@ -154,6 +154,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "insecure-time"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a70f5b669a3e02c7a45f4cc334ed251167c128f32698af0dd9f1b90b19200a61"
+dependencies = [
+ "compiler_builtins",
+ "rustc-std-workspace-alloc",
+ "rustc-std-workspace-core",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.174"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -342,6 +353,7 @@ dependencies = [
  "fortanix-sgx-abi",
  "hashbrown",
  "hermit-abi",
+ "insecure-time",
  "libc",
  "miniz_oxide",
  "object",

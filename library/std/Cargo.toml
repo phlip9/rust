@@ -68,6 +68,7 @@ dlmalloc = { version = "0.2.10", features = ['rustc-dep-of-std'] }
 fortanix-sgx-abi = { version = "0.6.1", features = [
     'rustc-dep-of-std',
 ], public = true }
+insecure-time = { version = "0.1", default-features = false, features = ["rustc-dep-of-std"] }
 snmalloc-edp = { path = "../snmalloc-edp" , features = ['rustc-dep-of-std'], public = true }
 
 [target.'cfg(target_os = "hermit")'.dependencies]
