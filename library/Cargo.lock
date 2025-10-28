@@ -155,11 +155,10 @@ dependencies = [
 
 [[package]]
 name = "insecure-time"
-version = "0.1.0"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a70f5b669a3e02c7a45f4cc334ed251167c128f32698af0dd9f1b90b19200a61"
+checksum = "89bc33b4b2020ee8ae76cafb1383dddd27a4ee6c69179afb2707d7ce7ee0f35d"
 dependencies = [
- "compiler_builtins",
  "rustc-std-workspace-alloc",
  "rustc-std-workspace-core",
 ]
