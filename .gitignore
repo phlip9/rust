@@ -97,6 +97,13 @@ tests/rustdoc-gui/src/**.lock
 ## nix
 /flake.nix
 flake.lock
-/default.nix
+/result
+/result-*
+
+# misc
+/prompts/
+/prompts.md
+/notes/
+/notes.md
 
 # Before adding new lines, see the comment at the top.
