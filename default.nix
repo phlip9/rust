@@ -1,12 +1,14 @@
 # provide toolchains needed to compile rust-std for x86_64-fortanix-unknown-sgx
-{
-  nixpkgs ? ../nixpkgs,
-  pkgs ? import nixpkgs {
-    localSystem = "x86_64-unknown-linux-gnu";
-  },
-}:
+# {
+#   nixpkgs ? ../nixpkgs,
+#   pkgs ? import nixpkgs {
+#     localSystem = "x86_64-unknown-linux-gnu";
+#   },
+# }:
 rec {
-  inherit pkgs;
+  dotfiles = import ../dotfiles { };
+
+  pkgs = dotfiles.pkgs;
   inherit (pkgs) lib stdenv callPackage;
 
   # package containing `llvm-config` so we can avoid rebuilding all of LLVM
@@ -47,12 +49,19 @@ rec {
       shopt -s extglob
       cp -R $src/include/c++/v1/!(__config_site) $out/include
       shopt -u extglob
-
+    ''
+    + lib.optionalString (lib.versionAtLeast libcxx.version "20") ''
       substitute $src/include/c++/v1/__config_site $out/include/__config_site \
         --replace-fail '#define _LIBCPP_HAS_FILESYSTEM 1' '#define _LIBCPP_HAS_FILESYSTEM 0' \
         --replace-fail '#define _LIBCPP_HAS_LOCALIZATION 1' '#define _LIBCPP_HAS_LOCALIZATION 0' \
         --replace-fail '#define _LIBCPP_HAS_TERMINAL 1' '#define _LIBCPP_HAS_TERMINAL 0' \
         --replace-fail '#define _LIBCPP_HAS_THREAD_API_PTHREAD 0' '#define _LIBCPP_HAS_THREAD_API_PTHREAD 1'
+    ''
+    + lib.optionalString (lib.versionOlder libcxx.version "20") ''
+      substitute $src/include/c++/v1/__config_site $out/include/__config_site \
+        --replace-fail '/* #undef _LIBCPP_HAS_NO_FILESYSTEM */' '#define _LIBCPP_HAS_NO_FILESYSTEM 1' \
+        --replace-fail '/* #undef _LIBCPP_HAS_NO_LOCALIZATION */' '#define _LIBCPP_HAS_NO_LOCALIZATION 1' \
+        --replace-fail '/* #undef _LIBCPP_HAS_THREAD_API_PTHREAD */' '#define _LIBCPP_HAS_THREAD_API_PTHREAD 1'
     '';
   };
 
